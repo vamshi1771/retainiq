@@ -1,0 +1,28 @@
+.cm-filter-card{
+    background-color: rgb(255, 255, 255);
+    color: rgb(221, 221, 221);
+    padding: 50px 20px;
+    border-radius: 4px;
+    /* border-style: dotted; */
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    -webkit-box-pack: justify;
+    border-radius: 4px;
+    height: 200px;
+    width: 400px !important;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+
+.cm-inner-box{
+    border-radius: 4px;
+    padding: 1.5rem .75rem;
+}
+
+.cm-content{
+    border-radius: 4px;
+    padding: .25rem .75rem;
+    width: max-content; 
+}

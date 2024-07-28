@@ -1,0 +1,50 @@
+.cm-img-card{
+    height: 130px;
+    width: 130px;
+    border-radius: 4px;
+}
+
+.cm-design-card{
+    background-color: rgb(255, 255, 255);
+    color: rgb(221, 221, 221);
+    padding: 40px 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 4px;
+    height: 200px;
+    width: 200px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+.cm-edit-icon{
+    opacity: 0;
+    display: none;
+}
+.cm-insert-btn{
+    opacity: 0;
+    display: none;
+}
+
+.cm-design-card:hover .cm-insert-btn{
+    width: 70px;
+    height: 40px;
+    font-size: 22px;
+    padding: .12em .15em;
+    border-radius: 4px;
+    background-color: #fff;
+    display: block;
+    opacity: 1;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+
+}
+
+.cm-design-card:hover .cm-edit-icon{
+    width: 40px;
+    height: 40px;
+    color:tomato;
+    background-color: aliceblue;
+    display: block;
+    opacity: 1;
+}

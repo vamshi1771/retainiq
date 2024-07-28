@@ -1,0 +1,14 @@
+.cm-number{
+    font-family: 'Trafalgar';
+    font-size: 38px;
+    font-weight:700;
+    display: inline !important;
+    /* padding-top: 50px !important; */
+    /* margin-top: 50px; */
+}
+
+.cm-grid-icon{
+    color:#ADD8E6;
+}
+
+

@@ -1,0 +1,7 @@
+.cm-designs-dashbord {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding-left: 30px;
+    width: 100%;
+}
