@@ -15,6 +15,7 @@ import image_8 from './images/image_8.webp'
 import image_9 from './images/image_9.webp'
 import image_10 from './images/image_10.webp'
 import image_11 from "./images/image_11.webp"
+import image_12 from "./images/image_12.webp"
 import SnackBar from './tablerows/SnackBar';
 import { useDispatch, useSelector } from "react-redux";
 import { openSnackBar } from './redux/actions/snackbaractions';
@@ -33,18 +34,18 @@ function App() {
         newVarients: [{ id: 1, label: "Varient1" }]
     });
     const designsData = [
-        { id: 1, imageName: "sportsShoes", imageUrl: [image] },
-        { id: 2, imageName: "sportsShoes", imageUrl: [image_1] },
-        { id: 3, imageName: "sportsShoes", imageUrl: [image_2] },
-        { id: 4, imageName: "sportsShoes", imageUrl: [image_3] },
-        { id: 5, imageName: "sportsShoes", imageUrl: [image_4] },
-        { id: 6, imageName: "sportsShoes", imageUrl: [image_5] },
-        { id: 7, imageName: "sportsShoes", imageUrl: [image_6] },
-        { id: 8, imageName: "sportsShoes", imageUrl: [image_7] },
+        { id: 1, imageName: "sports shoes", imageUrl: [image] },
+        { id: 2, imageName: "Three-Piece Tuxedo", imageUrl: [image_1] },
+        { id: 3, imageName: "White Sharwani ", imageUrl: [image_2] },
+        { id: 4, imageName: "childern dress", imageUrl: [image_3] },
+        { id: 5, imageName: "white frok", imageUrl: [image_4] },
+        { id: 6, imageName: "Grey Suit", imageUrl: [image_5] },
+        { id: 7, imageName: "High Neck Jacket", imageUrl: [image_6] },
+        { id: 8, imageName: "Brown Casual Jacket", imageUrl: [image_7] },
         { id: 9, imageName: "sportsShoes", imageUrl: [image_8] },
-        { id: 10, imageName: "sportsShoes", imageUrl: [image_9] },
-        { id: 11, imageName: "sportsShoes", imageUrl: [image_10] },
-        { id: 12, imageName: "sportsShoes", imageUrl: [image_10] }];
+        { id: 10, imageName: "Golden Brocade Sherwani", imageUrl: [image_9] },
+        { id: 11, imageName: "Sherwani", imageUrl: [image_10] },
+        { id: 12, imageName: "Ivory Silk Sherwani", imageUrl: [image_12] }];
 
     const [modalStatus, setModalStatus] = React.useState(false);
     const [varientId, setVarientId] = React.useState(0);
@@ -64,15 +65,15 @@ function App() {
     const [rowData, setRowData] = React.useState([{
         productFilter: {
             id: 1,
-            name: "sharwanis",
+            name: "shrewanis",
             brand: "Brand H",
             price: "$40-$60",
             rating: "4.6",
             availability: "Out of Stock"
         },
-        primaryVairent: { imageName: "Golden Brocade Sherwani", imageUrl: [image_9] },
+        primaryVairent: { imageName: "Golden Brocade Sherwani", imageUrl: [image_2] },
         newVarients: [
-            { id: 1, imageName: "Ivory Silk Sherwani", imageUrl: [image_10] },
+            { id: 1, imageName: "Ivory Silk Sherwani", imageUrl: [image_12] },
         ]
     },
     {
@@ -83,7 +84,7 @@ function App() {
             rating: "4.7",
             availability: "In Stock"
         },
-        primaryVairent: { imageName: "Three-Piece Tuxedo", imageUrl: [image_5] },
+        primaryVairent: { imageName: "Three-Piece Tuxedo", imageUrl: [image_1] },
         newVarients: [
             { id: 1, imageName: "Plaid Check Suit", imageUrl: [image_7] },
         ]
@@ -97,9 +98,9 @@ function App() {
             price: "$150-$200",
             availability: "In Stock"
         },
-        primaryVairent: { imageName: "Mega Sale", imageUrl: [image_1] },
+        primaryVairent: { imageName: "white frok", imageUrl: [image_4] },
         newVarients: [
-            { id: 1, imageName: "summer sale", imageUrl: [image_2] },
+            { id: 1, imageName: "childern dress", imageUrl: [image_3] },
         ]
     },
     {
@@ -138,10 +139,11 @@ function App() {
         let _rowData = [...rowData];
         const draggedItem = _rowData.splice(dragItem.current, 1)[0];
         _rowData.splice(dragOverItem.current, 0, draggedItem);
+
+        setRowData(_rowData);
+        { dragItem.current !== dragOverItem.current && disPatch(openSnackBar({ severity: "success", message: "State swaped Successfully" })) }
         dragItem.current = null;
         dragOverItem.current = null;
-        setRowData(_rowData);
-        disPatch(openSnackBar({ severity: "success", message: "State swaped Successfully" }))
     }
 
     const handleDeleteRow = (index) => {
@@ -211,23 +213,33 @@ function App() {
 
     const handleInsertDesign = (ind) => {
 
-        const newVariant = { id: 1, imageName: designsData[ind].imageName, imageUrl: [designsData[ind].imageUrl] };
-        console.log("rowData",rowData)
-        setRowData(prevRowData => {
-            const newRowData = [...prevRowData];
-            const rowToUpdate = { ...newRowData[rowId] };
-            console.log('rowToUpdate',rowToUpdate);
-            if (!rowToUpdate.newVarients || varientId < 0 || varientId >= rowToUpdate.newVarients.length) {
-                console.error(`Invalid variantId: ${varientId}`);
-                return prevRowData;
-            }
-            const newVariants = [...rowToUpdate.newVarients];
-            newVariants[varientId] = { ...newVariants[varientId], ...newVariant };
-            rowToUpdate.newVarients = newVariants;
-            newRowData[rowId] = rowToUpdate;
-            return newRowData;
-        });
+        const newVariant = { id: varientId, imageName: designsData[ind].imageName, imageUrl: [designsData[ind].imageUrl] };
+        if (varientId != -1) {
+            setRowData(prevRowData => {
+                const newRowData = [...prevRowData];
+                const rowToUpdate = { ...newRowData[rowId] };
+                if (!rowToUpdate.newVarients || varientId < 0 || varientId >= rowToUpdate.newVarients.length) {
+                    return prevRowData;
+                }
+                const newVariants = [...rowToUpdate.newVarients];
+                newVariants[varientId] = { ...newVariants[varientId], ...newVariant };
+                rowToUpdate.newVarients = newVariants;
+                newRowData[rowId] = rowToUpdate;
+                return newRowData;
+            });
+        }
+        else {
+            setRowData(prevRowData =>
+                prevRowData.map((row, i) => 
+                    i === rowId
+                        ? { ...row, primaryVairent: newVariant }
+                        : row
+                )
+            );
+
+        }
         handleModalClose();
+        disPatch(openSnackBar({ severity: "success", message: "Design Added Successfully" }))
     }
 
     return (
@@ -261,7 +273,7 @@ function App() {
                             onMouseEnter={() => setHoveredRowIndex(index)}
                             onMouseLeave={() => setHoveredRowIndex(null)}
                         >
-                            <td align='center' className="z1 sticky"><ActionCard key={index}  id={index} handledeleteState={handleDeleteRow} isVisiable ={hoveredRowIndex === index} /></td>
+                            <td align='center' className="z1 sticky"><ActionCard key={index} id={index} handledeleteState={handleDeleteRow} isVisiable={hoveredRowIndex === index} /></td>
                             <td className=" z1 stickycard"><FilterCard key={index} data={item.productFilter} /></td>
                             <td className='varients'><DesignCard varientId={-1} rowId={index} data={item.primaryVairent?.imageUrl[0] ? item.primaryVairent.imageUrl[0] : null} imageName={item.primaryVairent?.imageName ? item.primaryVairent.imageName : null} handleOpenDesignModal={handleOpenDesignModal} /></td>
                             {item.newVarients.map((column, ind) => (

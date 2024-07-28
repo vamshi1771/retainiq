@@ -13,7 +13,7 @@ const DesignCard = ({varientId, rowId, id, data,imageName,handleOpenDesignModal,
           { !isInside && <FontAwesomeIcon  className ="cm-pointer position-absolute cm-edit-icon" icon={faEdit} onClick={()=>handleOpenDesignModal(varientId,rowId)} />}
             </> :
             <div>
-                <span className="cm-content cm-pointer fw-medium text-blue-800 border border-blue-gray-300" onClick={handleOpenDesignModal} >+ Add design</span>
+                <span className="cm-content cm-pointer fw-medium text-blue-800 border border-blue-gray-300" onClick={()=>handleOpenDesignModal(varientId,rowId)} >+ Add design</span>
                 </div>
             }
            
