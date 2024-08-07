@@ -9,6 +9,7 @@ const ActionCard = ({id, handledeleteState,isVisiable}) => {
     return(
         <div className="cm-action-card">
             <div className="cm-trash-can">
+           
          <FontAwesomeIcon onClick={()=>handledeleteState(id)} size="xl" className="cm-trash-can cm-pointer" icon={faTrashCan} style={{color: "#c7431f", opacity : isVisiable ? 1 : 0}}  />
             </div>
             <span className="pt-2">

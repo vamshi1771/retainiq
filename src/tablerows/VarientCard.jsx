@@ -1,10 +1,10 @@
 import React from "react";
 
 
-const VarientCard = () => {
+const variantCard = () => {
 
     return(
         <></>
     )
 }
-export default VarientCard;
+export default variantCard;

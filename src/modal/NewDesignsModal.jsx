@@ -27,7 +27,7 @@ const style = {
 export default function basicModal({ open, data, handleOpen, handleClose,handleInsertDesign }) {
 
     return (
-        <div>
+        <div className='!shadow-2xl rounded'>
             <Modal
                 open={open}
                 onClose={handleClose}

@@ -26,7 +26,7 @@ const SnackBar = () => {
                     anchorOrigin={{
                        vertical: "top",
                        horizontal: "center"
-                    }} autoHideDuration={3000} onClose={handleClose}>
+                    }} autoHideDuration={1000} onClose={handleClose}>
                 <Alert
                     onClose={handleClose}
                     

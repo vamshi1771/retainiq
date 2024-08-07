@@ -21,6 +21,8 @@
 .cm-edit-icon{
     opacity: 0;
     display: none;
+    padding: 0.2em;
+    border-radius: 8px;
 }
 .cm-insert-btn{
     opacity: 0;
@@ -40,11 +42,13 @@
 
 }
 
-.cm-design-card:hover .cm-edit-icon{
+.cm-edit-icon-hovered{
     width: 40px;
     height: 40px;
     color:tomato;
     background-color: aliceblue;
     display: block;
     opacity: 1;
+    padding: 0.2em;
+    border-radius: 8px;
 }

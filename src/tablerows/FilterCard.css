@@ -3,8 +3,10 @@
     color: rgb(221, 221, 221);
     padding: 50px 20px;
     border-radius: 4px;
-    /* border-style: dotted; */
     position: relative;
+    display: inline-block; 
+    /* border-style: dotted; */
+    /* position: relative; */
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -21,8 +23,9 @@
     padding: 1.5rem .75rem;
 }
 
-.cm-content{
+.cm-content-text{
     border-radius: 4px;
     padding: .25rem .75rem;
     width: max-content; 
 }
+

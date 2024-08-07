@@ -31,7 +31,7 @@ import './App.css';
 function App() {
 
     const [columnData, setColumnData] = React.useState({
-        newVarients: [{ id: 1, label: "Varient1" }]
+        newvariants: [{ id: 1, label: "variant1" }]
     });
     const designsData = [
         { id: 1, imageName: "sports shoes", imageUrl: [image] },
@@ -48,17 +48,17 @@ function App() {
         { id: 12, imageName: "Ivory Silk Sherwani", imageUrl: [image_12] }];
 
     const [modalStatus, setModalStatus] = React.useState(false);
-    const [varientId, setVarientId] = React.useState(0);
+    const [variantId, setvariantId] = React.useState(0);
     const [rowId, setRowId] = React.useState(0);
     const handleModalOpen = () => setModalStatus(true);
     const handleModalClose = () => setModalStatus(false);
     const [hoveredRowIndex, setHoveredRowIndex] = React.useState(null);
     const disPatch = useDispatch();
-    const [varientIndex, setVarientIndex] = React.useState(0);
+    const [variantIndex, setvariantIndex] = React.useState(0);
     const initialRowData = {
         productFilter: null,
         primaryVairent: { imageName: "", imageUrl: [] },
-        newVarients: [
+        newvariants: [
             { id: 1, imageName: "", imageUrl: [] },
         ]
     }
@@ -72,7 +72,7 @@ function App() {
             availability: "Out of Stock"
         },
         primaryVairent: { imageName: "Golden Brocade Sherwani", imageUrl: [image_2] },
-        newVarients: [
+        newvariants: [
             { id: 1, imageName: "Ivory Silk Sherwani", imageUrl: [image_12] },
         ]
     },
@@ -85,7 +85,7 @@ function App() {
             availability: "In Stock"
         },
         primaryVairent: { imageName: "Three-Piece Tuxedo", imageUrl: [image_1] },
-        newVarients: [
+        newvariants: [
             { id: 1, imageName: "Plaid Check Suit", imageUrl: [image_7] },
         ]
         ,
@@ -99,7 +99,7 @@ function App() {
             availability: "In Stock"
         },
         primaryVairent: { imageName: "white frok", imageUrl: [image_4] },
-        newVarients: [
+        newvariants: [
             { id: 1, imageName: "childern dress", imageUrl: [image_3] },
         ]
     },
@@ -112,26 +112,28 @@ function App() {
             rating: "4.8",
         },
         primaryVairent: { imageName: " High Neck Jacket", imageUrl: [image_6] },
-        newVarients: [
+        newvariants: [
             { id: 1, imageName: " Brown Casual Jacket", imageUrl: [image_11] },
         ]
     }])
     const dragItem = useRef(null);
     const dragOverItem = React.useRef(null);
-
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
+
     const handleOPenMenuitems = (event, index) => {
         setAnchorEl(event.currentTarget);
-        setVarientIndex(index);
+        setvariantIndex(index);
     };
     const handleClose = () => {
         setAnchorEl(null);
     };
 
-    const handleOpenDesignModal = (varientId, rowId) => {
+    
+
+    const handleOpenDesignModal = (variantId, rowId) => {
         setModalStatus(true);
-        setVarientId(varientId);
+        setvariantId(variantId);
         setRowId(rowId)
     }
 
@@ -139,7 +141,6 @@ function App() {
         let _rowData = [...rowData];
         const draggedItem = _rowData.splice(dragItem.current, 1)[0];
         _rowData.splice(dragOverItem.current, 0, draggedItem);
-
         setRowData(_rowData);
         { dragItem.current !== dragOverItem.current && disPatch(openSnackBar({ severity: "success", message: "State swaped Successfully" })) }
         dragItem.current = null;
@@ -147,20 +148,24 @@ function App() {
     }
 
     const handleDeleteRow = (index) => {
+        if(rowData.length ==1) {
+            disPatch(openSnackBar({ severity: "error", message: "Atleast one state should be there" }));
+            return;
+        }
         setRowData(prevList => prevList.filter((item, i) => i !== index));
         disPatch(openSnackBar({ severity: "error", message: "State deleted Successfully" }))
     }
-    const handleDeleteVarient = (index) => {
+    const handleDeletevariant = (index) => {
         setColumnData(prevColumnData => ({
             ...prevColumnData,
-            newVarients: prevColumnData.newVarients.filter((item, i) => i !== index)
+            newvariants: prevColumnData.newvariants.filter((item, i) => i !== index)
         }));
 
         setRowData(prevRowData => prevRowData.map(item => ({
             ...item,
-            newVarients: item.newVarients.filter((variant, i) => i !== index)
+            newvariants: item.newvariants.filter((variant, i) => i !== index)
         })));
-        disPatch(openSnackBar({ severity: "error", message: "Varient deleted Successfully" }))
+        disPatch(openSnackBar({ severity: "error", message: "variant deleted Successfully" }))
         handleClose();
     }
 
@@ -172,11 +177,11 @@ function App() {
             dummyRow.primaryVairent = { imageName: "", imageUrl: [] }
 
             const obj = { id: null, imageName: "", imageUrl: [] }
-            const varients = [];
-            for (let i = 0; i < dummyRow.newVarients.length; i++) {
-                varients.push(obj);
+            const variants = [];
+            for (let i = 0; i < dummyRow.newvariants.length; i++) {
+                variants.push(obj);
             }
-            dummyRow.newVarients = varients;
+            dummyRow.newvariants = variants;
             setRowData(prevList => [...prevList, dummyRow]);
         }
         else {
@@ -189,48 +194,47 @@ function App() {
     }
 
     const handleChangeColumns = () => {
-
-        let newVarientslength = columnData.newVarients.length;
-        const newCol = { id: newVarientslength, label: `Varient${newVarientslength + 1}` };
-        const list = [...columnData.newVarients];
+        let newvariantslength = columnData.newvariants.length;
+        const newCol = { id: newvariantslength, label: `variant${newvariantslength + 1}` };
+        const list = [...columnData.newvariants];
         list.push(newCol);
         setColumnData({
             ...columnData,
-            newVarients: list,
+            newvariants: list,
         });
         const newRowData = rowData.map((element) => {
             const tempRow = { ...element };
-            const tempList = [...tempRow.newVarients];
-            const newRowvarientData = { id: 2, imageName: "", imageUrl: [] };
-            tempList.push(newRowvarientData);
-            tempRow.newVarients = tempList;
+            const tempList = [...tempRow.newvariants];
+            const newRowvariantData = { id: 2, imageName: "", imageUrl: [] };
+            tempList.push(newRowvariantData);
+            tempRow.newvariants = tempList;
             return tempRow;
         });
         setRowData(newRowData);
-        disPatch(openSnackBar({ severity: "success", message: "New Varient Added Successfully" }))
+        disPatch(openSnackBar({ severity: "success", message: "New variant Added Successfully" }))
     }
 
 
     const handleInsertDesign = (ind) => {
 
-        const newVariant = { id: varientId, imageName: designsData[ind].imageName, imageUrl: [designsData[ind].imageUrl] };
-        if (varientId != -1) {
+        const newVariant = { id: variantId, imageName: designsData[ind].imageName, imageUrl: [designsData[ind].imageUrl] };
+        if (variantId != -1) {
             setRowData(prevRowData => {
                 const newRowData = [...prevRowData];
                 const rowToUpdate = { ...newRowData[rowId] };
-                if (!rowToUpdate.newVarients || varientId < 0 || varientId >= rowToUpdate.newVarients.length) {
+                if (!rowToUpdate.newvariants || variantId < 0 || variantId >= rowToUpdate.newvariants.length) {
                     return prevRowData;
                 }
-                const newVariants = [...rowToUpdate.newVarients];
-                newVariants[varientId] = { ...newVariants[varientId], ...newVariant };
-                rowToUpdate.newVarients = newVariants;
+                const newVariants = [...rowToUpdate.newvariants];
+                newVariants[variantId] = { ...newVariants[variantId], ...newVariant };
+                rowToUpdate.newvariants = newVariants;
                 newRowData[rowId] = rowToUpdate;
                 return newRowData;
             });
         }
         else {
             setRowData(prevRowData =>
-                prevRowData.map((row, i) => 
+                prevRowData.map((row, i) =>
                     i === rowId
                         ? { ...row, primaryVairent: newVariant }
                         : row
@@ -238,21 +242,22 @@ function App() {
             );
 
         }
+
         handleModalClose();
         disPatch(openSnackBar({ severity: "success", message: "Design Added Successfully" }))
     }
 
     return (
-        <div className="mt-4  cm-content border border-blue-gray-300 table-container">
+        <div className="mt-4 cm-content border border-blue-gray-300 table-container">
             <table>
                 <thead>
                     <tr>
                         <th className="cm-table-header z1 sticky"></th>
                         <th className="cm-table-header z1 stickycard">Product Filter</th>
-                        <th className='cm-table-header' >Primary Varient</th>
-                        {columnData.newVarients.map((column, index) => (
+                        <th className='cm-table-header' >Primary variant</th>
+                        {columnData?.newvariants.map((column, index) => (
                             <th className='cm-table-header' key={column.id}><span>{column.label}</span>
-                                <FontAwesomeIcon className="ms-4 cm-pointer" icon={faEllipsisVertical}
+                                <FontAwesomeIcon className="ms-4 ps-1 cm-pointer" icon={faEllipsisVertical}
                                     id="basic-button"
                                     aria-controls={open ? 'basic-menu' : undefined}
                                     aria-haspopup="true"
@@ -275,9 +280,9 @@ function App() {
                         >
                             <td align='center' className="z1 sticky"><ActionCard key={index} id={index} handledeleteState={handleDeleteRow} isVisiable={hoveredRowIndex === index} /></td>
                             <td className=" z1 stickycard"><FilterCard key={index} data={item.productFilter} /></td>
-                            <td className='varients'><DesignCard varientId={-1} rowId={index} data={item.primaryVairent?.imageUrl[0] ? item.primaryVairent.imageUrl[0] : null} imageName={item.primaryVairent?.imageName ? item.primaryVairent.imageName : null} handleOpenDesignModal={handleOpenDesignModal} /></td>
-                            {item.newVarients.map((column, ind) => (
-                                <td className='varients' key={column.key}><DesignCard key={ind} varientId={ind} rowId={index} data={column.imageUrl[0]} imageName={column.imageName} handleOpenDesignModal={handleOpenDesignModal} /></td>
+                            <td className='variants '><DesignCard variantId={-1} rowId={index} data={item.primaryVairent?.imageUrl[0] ? item.primaryVairent.imageUrl[0] : null} imageName={item.primaryVairent?.imageName ? item.primaryVairent.imageName : null} handleOpenDesignModal={handleOpenDesignModal} isHovered={hoveredRowIndex === index} /></td>
+                            {item?.newvariants.map((column, ind) => (
+                                <td className='variants border-r-4 border-indigo-500' key={column.id}><DesignCard key={ind} variantId={ind} rowId={index} data={column.imageUrl[0]} imageName={column.imageName} handleOpenDesignModal={handleOpenDesignModal} isHovered={hoveredRowIndex === index}/></td>
                             ))}
                             <td> <FontAwesomeIcon icon={faCirclePlus} className='cm-pointer' size="2xl" style={{ color: "#63E6BE", }} onClick={handleChangeColumns} /></td>
                         </tr>
@@ -299,7 +304,7 @@ function App() {
                     'aria-labelledby': 'basic-button',
                 }}
             >
-                <MenuItem onClick={() => handleDeleteVarient(varientIndex)}><FontAwesomeIcon icon={faTrash} style={{ color: "#db0a34", }} /><span className='ms-3 text-blue-800 fw-medium'>Delete Varient</span></MenuItem>
+                <MenuItem onClick={() => handleDeletevariant(variantIndex)}><FontAwesomeIcon icon={faTrash} style={{ color: "#db0a34", }} /><span className='ms-3 text-blue-800 fw-medium'>Delete variant</span></MenuItem>
             </Menu>
             <Modal open={modalStatus} data={designsData} handleopen={handleModalOpen} handleClose={handleModalClose} handleInsertDesign={handleInsertDesign} />
             <SnackBar />
