@@ -257,7 +257,7 @@ function App() {
                         <th className='cm-table-header' >Primary variant</th>
                         {columnData?.newvariants.map((column, index) => (
                             <th className='cm-table-header' key={column.id}><span>{column.label}</span>
-                                <FontAwesomeIcon className="ms-4 ps-1 cm-pointer" icon={faEllipsisVertical}
+                                <FontAwesomeIcon className="ms-4 ps-2 pe-2 cm-pointer" icon={faEllipsisVertical}
                                     id="basic-button"
                                     aria-controls={open ? 'basic-menu' : undefined}
                                     aria-haspopup="true"
@@ -282,7 +282,7 @@ function App() {
                             <td className=" z1 stickycard"><FilterCard key={index} data={item.productFilter} /></td>
                             <td className='variants '><DesignCard variantId={-1} rowId={index} data={item.primaryVairent?.imageUrl[0] ? item.primaryVairent.imageUrl[0] : null} imageName={item.primaryVairent?.imageName ? item.primaryVairent.imageName : null} handleOpenDesignModal={handleOpenDesignModal} isHovered={hoveredRowIndex === index} /></td>
                             {item?.newvariants.map((column, ind) => (
-                                <td className='variants border-r-4 border-indigo-500' key={column.id}><DesignCard key={ind} variantId={ind} rowId={index} data={column.imageUrl[0]} imageName={column.imageName} handleOpenDesignModal={handleOpenDesignModal} isHovered={hoveredRowIndex === index}/></td>
+                                <td className='variants ' key={column.id}><DesignCard key={ind} variantId={ind} rowId={index} data={column.imageUrl[0]} imageName={column.imageName} handleOpenDesignModal={handleOpenDesignModal} isHovered={hoveredRowIndex === index}/></td>
                             ))}
                             <td> <FontAwesomeIcon icon={faCirclePlus} className='cm-pointer' size="2xl" style={{ color: "#63E6BE", }} onClick={handleChangeColumns} /></td>
                         </tr>
