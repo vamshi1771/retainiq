@@ -216,24 +216,27 @@ function App() {
     }
 
 
-    const handleInsertDesign = (ind) => {   
-        const Variant = { id: variantId, imageName: designsData[ind].imageName, imageUrl: [designsData[ind].imageUrl] };
+    const handleInsertDesign = (ind) => {  
+        console.log("variantId",variantId); 
+        const newVariant = { id: variantId, imageName: designsData[ind].imageName, imageUrl: [designsData[ind].imageUrl] };
         if (variantId != -1) {
-            setRowData(prevRowData => {
-                const newRowData = [...prevRowData];
-                const rowToUpdate = { ...newRowData[rowId] };
-                const newVariants = [...rowToUpdate.newvariants];
-                newVariants[variantId] = { ...newVariants[variantId], ...Variant };
-                rowToUpdate.newvariants = newVariants;
-                newRowData[rowId] = rowToUpdate;
-                return newRowData;
-            });
+            setRowData((prevRowData) =>
+                prevRowData.map((item, index) => {
+                    if (index === rowId) {
+                        const updatedVariants = item.newvariants.map(variant => 
+                            variant.id === variantId ? { ...variant, ...newVariant } : variant
+                        );
+                        return { ...item, newvariants: updatedVariants };
+                    }
+                    return item;
+                })
+            );
         }
         else {
             setRowData(prevRowData =>
                 prevRowData.map((row, i) =>
                     i === rowId
-                        ? { ...row, primaryVairent: Variant }
+                        ? { ...row, primaryVairent: newVariant }
                         : row
                 )
             );
@@ -279,7 +282,7 @@ function App() {
                             <td className=" z1 stickycard"><FilterCard key={index} data={item.productFilter} /></td>
                             <td className='variants '><DesignCard variantId={-1} rowId={index} data={item.primaryVairent?.imageUrl[0] ? item.primaryVairent.imageUrl[0] : null} imageName={item.primaryVairent?.imageName ? item.primaryVairent.imageName : null} handleOpenDesignModal={handleOpenDesignModal} isHovered={hoveredRowIndex === index} /></td>
                             {item?.newvariants.map((column, ind) => (
-                                <td className='variants ' key={column.id}><DesignCard key={ind} variantId={ind} rowId={index} data={column.imageUrl[0]} imageName={column.imageName} handleOpenDesignModal={handleOpenDesignModal} isHovered={hoveredRowIndex === index} /></td>
+                                <td className='variants ' key={column.id}><DesignCard key={ind} variantId={column.id} rowId={index} data={column.imageUrl[0]} imageName={column.imageName} handleOpenDesignModal={handleOpenDesignModal} isHovered={hoveredRowIndex === index} /></td>
                             ))}
                             <td> <FontAwesomeIcon icon={faCirclePlus} className='cm-pointer' size="2xl" style={{ color: "#63E6BE", }} onClick={handleChangeColumns} /></td>
                         </tr>
