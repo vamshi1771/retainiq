@@ -129,7 +129,7 @@ function App() {
         setAnchorEl(null);
     };
 
-    
+
 
     const handleOpenDesignModal = (variantId, rowId) => {
         setModalStatus(true);
@@ -148,7 +148,7 @@ function App() {
     }
 
     const handleDeleteRow = (index) => {
-        if(rowData.length ==1) {
+        if (rowData.length == 1) {
             disPatch(openSnackBar({ severity: "error", message: "Atleast one state should be there" }));
             return;
         }
@@ -169,16 +169,17 @@ function App() {
         handleClose();
     }
 
-    const handleChangerows = async () => {
+    const handleChangerows = () => {
         let rowList = [...rowData];
         if (rowData.length > 0) {
             const dummyRow = { ...rowData[0] };
             dummyRow.productFilter = null;
             dummyRow.primaryVairent = { imageName: "", imageUrl: [] }
 
-            const obj = { id: null, imageName: "", imageUrl: [] }
+            
             const variants = [];
             for (let i = 0; i < dummyRow.newvariants.length; i++) {
+                const obj = { id: i+1, imageName: "", imageUrl: [] }
                 variants.push(obj);
             }
             dummyRow.newvariants = variants;
@@ -205,7 +206,7 @@ function App() {
         const newRowData = rowData.map((element) => {
             const tempRow = { ...element };
             const tempList = [...tempRow.newvariants];
-            const newRowvariantData = { id: 2, imageName: "", imageUrl: [] };
+            const newRowvariantData = { id: newvariantslength + 1, imageName: "", imageUrl: [] };
             tempList.push(newRowvariantData);
             tempRow.newvariants = tempList;
             return tempRow;
@@ -215,18 +216,14 @@ function App() {
     }
 
 
-    const handleInsertDesign = (ind) => {
-
-        const newVariant = { id: variantId, imageName: designsData[ind].imageName, imageUrl: [designsData[ind].imageUrl] };
+    const handleInsertDesign = (ind) => {   
+        const Variant = { id: variantId, imageName: designsData[ind].imageName, imageUrl: [designsData[ind].imageUrl] };
         if (variantId != -1) {
             setRowData(prevRowData => {
                 const newRowData = [...prevRowData];
                 const rowToUpdate = { ...newRowData[rowId] };
-                if (!rowToUpdate.newvariants || variantId < 0 || variantId >= rowToUpdate.newvariants.length) {
-                    return prevRowData;
-                }
                 const newVariants = [...rowToUpdate.newvariants];
-                newVariants[variantId] = { ...newVariants[variantId], ...newVariant };
+                newVariants[variantId] = { ...newVariants[variantId], ...Variant };
                 rowToUpdate.newvariants = newVariants;
                 newRowData[rowId] = rowToUpdate;
                 return newRowData;
@@ -236,7 +233,7 @@ function App() {
             setRowData(prevRowData =>
                 prevRowData.map((row, i) =>
                     i === rowId
-                        ? { ...row, primaryVairent: newVariant }
+                        ? { ...row, primaryVairent: Variant }
                         : row
                 )
             );
@@ -282,7 +279,7 @@ function App() {
                             <td className=" z1 stickycard"><FilterCard key={index} data={item.productFilter} /></td>
                             <td className='variants '><DesignCard variantId={-1} rowId={index} data={item.primaryVairent?.imageUrl[0] ? item.primaryVairent.imageUrl[0] : null} imageName={item.primaryVairent?.imageName ? item.primaryVairent.imageName : null} handleOpenDesignModal={handleOpenDesignModal} isHovered={hoveredRowIndex === index} /></td>
                             {item?.newvariants.map((column, ind) => (
-                                <td className='variants ' key={column.id}><DesignCard key={ind} variantId={ind} rowId={index} data={column.imageUrl[0]} imageName={column.imageName} handleOpenDesignModal={handleOpenDesignModal} isHovered={hoveredRowIndex === index}/></td>
+                                <td className='variants ' key={column.id}><DesignCard key={ind} variantId={ind} rowId={index} data={column.imageUrl[0]} imageName={column.imageName} handleOpenDesignModal={handleOpenDesignModal} isHovered={hoveredRowIndex === index} /></td>
                             ))}
                             <td> <FontAwesomeIcon icon={faCirclePlus} className='cm-pointer' size="2xl" style={{ color: "#63E6BE", }} onClick={handleChangeColumns} /></td>
                         </tr>
